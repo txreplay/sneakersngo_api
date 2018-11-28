@@ -14,10 +14,8 @@ const register = (body) => {
                 bcrypt.hash(body.password, 10).then((hashedPwd) => {
                     const confirmationHash = randomstring.generate({length: 20});
                     body.password = hashedPwd;
-                    body.confirmation = {
-                        confirmed: false,
-                        confirmationHash: confirmationHash
-                    };
+                    body.confirmed = false;
+                    body.confirmationHash = confirmationHash;
 
                     return UserModel.create(body).then((mongoResponse) => {
                         const emailData = {
@@ -66,4 +64,24 @@ const login = (body) => {
     });
 };
 
-module.exports = {register, login};
+const confirmation = (params) => {
+    return new Promise((resolve, reject) => {
+        UserModel.findOne({confirmationHash: params.confirmationHash}, (error, user) => {
+            if (error) {
+                return reject(error);
+            } else if (!user) {
+                return reject('Unknown confirmation hash');
+            } else {
+                user.confirmed = true;
+                user.confirmationHash = undefined;
+                user.confirmationDate = Date.now();
+
+                user.save().then((mongoResponse) => {
+                    resolve(mongoResponse);
+                })
+            }
+        });
+    });
+};
+
+module.exports = {register, login, confirmation};

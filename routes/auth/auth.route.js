@@ -1,6 +1,6 @@
 const express = require('express');
 const authRouter = express.Router();
-const {register, login} = require('./auth.controller');
+const {register, login, confirmation} = require('./auth.controller');
 const {gotBody, checkFields} = require('../../services/request.service');
 const {sendBodyError, sendFieldsError, sendApiSuccess, sendApiError} = require('../../services/response.service');
 
@@ -36,6 +36,24 @@ class AuthRouterClass {
             } else {
                 login(req.body).then((apiResponse) => {
                     sendApiSuccess(res, apiResponse, 'User successfully logged.');
+                }).catch((apiResponseErr) => {
+                    sendApiError(res, null, apiResponseErr);
+                });
+            }
+        });
+
+        authRouter.get('/confirmation/:confirmationHash', (req, res) => {
+            if (gotBody(req.params)) {
+                sendBodyError(res);
+            }
+
+            const {validity, extra, miss} = checkFields(['confirmationHash'], req.params);
+
+            if (!validity) {
+                sendFieldsError(res, extra, miss);
+            } else {
+                confirmation(req.params).then((apiResponse) => {
+                    sendApiSuccess(res, apiResponse, 'User successfully confirmed.');
                 }).catch((apiResponseErr) => {
                     sendApiError(res, null, apiResponseErr);
                 });

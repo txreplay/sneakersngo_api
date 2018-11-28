@@ -6,11 +6,9 @@ const userSchema = new mongoose.Schema({
     lastname: String,
     email: String,
     password: String,
-    confirmation: {
-        confirmed: Boolean,
-        confirmationHash: String,
-        confirmationDate: Date
-    }
+    confirmed: Boolean,
+    confirmationHash: String,
+    confirmationDate: Date
 }, {timestamps: true});
 
 userSchema.methods.generateJwt = function generateJwt() {

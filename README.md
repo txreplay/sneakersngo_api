@@ -21,3 +21,5 @@ JWT_SECRET = 'OIç8Y9Sds$ùD09èé.:ùpsofudDS'
 `POST /auth/register`
 
 `POST /auth/login`
+
+`GET /auth/confirmation/:confirmationHash`
