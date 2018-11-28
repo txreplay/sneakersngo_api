@@ -5,8 +5,13 @@ const userSchema = new mongoose.Schema({
     firstname: String,
     lastname: String,
     email: String,
-    password: String
-});
+    password: String,
+    confirmation: {
+        confirmed: Boolean,
+        confirmationHash: String,
+        confirmationDate: Date
+    }
+}, {timestamps: true});
 
 userSchema.methods.generateJwt = function generateJwt() {
     const expiry = new Date();
