@@ -48,6 +48,8 @@ const login = (body) => {
                 return reject(error);
             } else if (!user) {
                 return reject('Unknown user');
+            } else if (user.confirmed === false) {
+                return reject('Unconfirmed account');
             } else {
                 const validPassword = bcrypt.compareSync(body.password, user.password);
 
