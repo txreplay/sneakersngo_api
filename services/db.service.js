@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const initClient = () => {
-    mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true }).then(() => {
+    mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true }).then(() => {
         console.log('Mongoose is connected');
     }, (error) => {
         console.log('ERROR - Mongoose is not connected');

@@ -10,7 +10,7 @@ Be sure to fill the `.env` file.
 Example :
 ```dotenv
 PORT = '4000'
-MONGO_URL = 'mongodb://localhost:27017/sneakersngo'
+MONGODB_URI = 'mongodb://localhost:27017/sneakersngo'
 JWT_SECRET = 'OIç8Y9Sds$ùD09èé.:ùpsofudDS'
 ```
 
