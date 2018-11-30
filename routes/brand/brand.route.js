@@ -15,15 +15,27 @@ class BrandRouterClass {
                 sendBodyError(res);
             }
 
-            const {validity, extra, miss} = checkFields(['test'], req.body);
+            const {validity, extra, miss} = checkFields(['names'], req.body);
 
             if (!validity) {
                 sendFieldsError(res, extra, miss);
             } else {
                 createBrand(req.body, req.user)
-                    .then(apiRes => sendApiSuccess(res, apiRes, ''))
+                    .then(apiRes => sendApiSuccess(res, apiRes, 'Brand successfully created.'))
                     .catch(apiResErr => sendApiError(res, null, apiResErr));
             }
+        });
+
+        brandRouter.get('/', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+            getAllBrands()
+                .then(apiRes => sendApiSuccess(res, apiRes, 'List of brands.'))
+                .catch(apiResErr => sendApiError(res, null, apiResErr));
+        });
+
+        brandRouter.get('/:id', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+            getOneBrand(req.params.id)
+                .then(apiRes => sendApiSuccess(res, apiRes, 'Brand ' + req.params.id))
+                .catch(apiResErr => sendApiError(res, null, apiResErr));
         });
     }
 

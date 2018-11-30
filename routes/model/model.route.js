@@ -15,15 +15,27 @@ class ModelRouterClass {
                 sendBodyError(res);
             }
 
-            const {validity, extra, miss} = checkFields(['test'], req.body);
+            const {validity, extra, miss} = checkFields(['names', 'brand'], req.body);
 
             if (!validity) {
                 sendFieldsError(res, extra, miss);
             } else {
                 createModel(req.body, req.user)
-                    .then(apiRes => sendApiSuccess(res, apiRes, ''))
+                    .then(apiRes => sendApiSuccess(res, apiRes, 'Model successfully created.'))
                     .catch(apiResErr => sendApiError(res, null, apiResErr));
             }
+        });
+
+        modelRouter.get('/', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+            getAllModels()
+                .then(apiRes => sendApiSuccess(res, apiRes, 'List of models.'))
+                .catch(apiResErr => sendApiError(res, null, apiResErr));
+        });
+
+        modelRouter.get('/:id', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+            getOneModel(req.params.id)
+                .then(apiRes => sendApiSuccess(res, apiRes, 'Model ' + req.params.id))
+                .catch(apiResErr => sendApiError(res, null, apiResErr));
         });
     }
 

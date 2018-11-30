@@ -4,11 +4,18 @@ const jwt = require('jsonwebtoken');
 const userSchema = new mongoose.Schema({
     firstname: String,
     lastname: String,
-    email: String,
+    email: {
+        type: String,
+        lowercase: true,
+        index: {
+            unique: true,
+        }
+    },
     password: String,
     confirmed: Boolean,
     confirmationHash: String,
-    confirmationDate: Date
+    confirmationDate: Date,
+    rights: Object
 }, {timestamps: true});
 
 userSchema.methods.generateJwt = function generateJwt() {

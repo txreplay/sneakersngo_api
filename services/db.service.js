@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const initClient = () => {
+    mongoose.set('useCreateIndex', true);
     mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true }).then(() => {
         console.log('Mongoose is connected');
     }, (error) => {
