@@ -1,3 +1,5 @@
+//TODO: Send back the status code in the response
+
 const sendBodyError = (res) => {
     return res.json({
         message: 'No body data provided',

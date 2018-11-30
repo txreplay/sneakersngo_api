@@ -16,11 +16,9 @@ class AuthRouterClass {
             if (!validity) {
                 sendFieldsError(res, extra, miss);
             } else {
-                register(req.body).then((apiResponse) => {
-                    sendApiSuccess(res, apiResponse, 'User successfully created.');
-                }).catch((apiResponseErr) => {
-                    sendApiError(res, null, apiResponseErr);
-                });
+                register(req.body)
+                    .then(apiRes => sendApiSuccess(res, apiRes, 'User successfully created.'))
+                    .catch(apiResErr => sendApiError(res, null, apiResErr));
             }
         });
 
@@ -34,11 +32,9 @@ class AuthRouterClass {
             if (!validity) {
                 sendFieldsError(res, extra, miss);
             } else {
-                login(req.body).then((apiResponse) => {
-                    sendApiSuccess(res, apiResponse, 'User successfully logged.');
-                }).catch((apiResponseErr) => {
-                    sendApiError(res, null, apiResponseErr);
-                });
+                login(req.body)
+                    .then(apiRes => sendApiSuccess(res, apiRes, 'User successfully logged.'))
+                    .catch(apiResErr => sendApiError(res, null, apiResErr));
             }
         });
 
@@ -52,11 +48,9 @@ class AuthRouterClass {
             if (!validity) {
                 sendFieldsError(res, extra, miss);
             } else {
-                confirmation(req.params).then((apiResponse) => {
-                    sendApiSuccess(res, apiResponse, 'User successfully confirmed.');
-                }).catch((apiResponseErr) => {
-                    sendApiError(res, null, apiResponseErr);
-                });
+                confirmation(req.params)
+                    .then(apiRes => sendApiSuccess(res, apiRes, 'User successfully confirmed.'))
+                    .catch(apiResErr => sendApiError(res, null, apiResErr));
             }
         });
     }
