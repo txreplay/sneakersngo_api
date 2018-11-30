@@ -1,6 +1,6 @@
 const express = require('express');
 const modelRouter = express.Router();
-const {createModel, getAllModels, getOneModel, editModel, deleteModel} = require('./model.controller');
+const {createModel, getAllModels, getAllModelsFromBrand, getOneModel, editModel, deleteModel} = require('./model.controller');
 const {gotBody, checkFields} = require('../../services/request.service');
 const {sendBodyError, sendFieldsError, sendApiSuccess, sendApiError} = require('../../services/response.service');
 
@@ -29,6 +29,12 @@ class ModelRouterClass {
         modelRouter.get('/', this.passport.authenticate('jwt', {session: false}), (req, res) => {
             getAllModels()
                 .then(apiRes => sendApiSuccess(res, apiRes, 'List of models.'))
+                .catch(apiResErr => sendApiError(res, null, apiResErr));
+        });
+
+        modelRouter.get('/brand/:id', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+            getAllModelsFromBrand(req.params.id)
+                .then(apiRes => sendApiSuccess(res, apiRes, 'List of models by brand ' + req.params.id))
                 .catch(apiResErr => sendApiError(res, null, apiResErr));
         });
 

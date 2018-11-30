@@ -30,7 +30,6 @@ const createModel = (body, user) => {
     });
 };
 
-//TODO: Replace `createdBy` by the name of Author + Id
 const getAllModels = () => {
     return new Promise((resolve, reject) => {
         ModelModel.find({}, (error, models) => {
@@ -43,7 +42,18 @@ const getAllModels = () => {
     });
 };
 
-//TODO: Replace `createdBy` by the name of Author + Id
+const getAllModelsFromBrand = (brandId) => {
+    return new Promise((resolve, reject) => {
+        ModelModel.find({brand: brandId}, (error, models) => {
+            if (error) {
+                return reject(error);
+            } else {
+                return resolve(models);
+            }
+        });
+    });
+};
+
 const getOneModel = (modelId) => {
     return new Promise((resolve, reject) => {
         ModelModel.findById(modelId, (error, model) => {
@@ -68,4 +78,4 @@ const deleteModel = () => {
     });
 };
 
-module.exports = {createModel, getAllModels, getOneModel, editModel, deleteModel};
+module.exports = {createModel, getAllModels, getAllModelsFromBrand, getOneModel, editModel, deleteModel};
