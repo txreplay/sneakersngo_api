@@ -6,30 +6,19 @@ const createModel = (body, user) => {
             const names = JSON.parse(body['names']);
 
             //TODO: Handle response with all created and all errors
-            let response = {created : [], error: []};
 
             for (const i in names) {
-                if (names.hasOwnProperty(i)) {
-                    const modelName = names[i];
+                if (names.hasOwnProperty(i) && names[i].trim() !== '') {
+                    body.name = names[i].trim();
+                    body.createdBy = user._id;
 
-                    ModelModel.findOne({name: modelName}, (error, model) => {
-                        if (error) {
-                            return reject(error);
-                        } else if (model) {
-                            return reject('Model already exists.');
-                        } else {
-                            body.name = modelName;
-                            body.createdBy = user._id;
-
-                            ModelModel.create(body)
-                                .then((mongoRes) => resolve(mongoRes))
-                                .catch((mongoResErr) => reject(mongoResErr));
-                        }
-                    });
+                    ModelModel.create(body)
+                        .then((mongoRes) => resolve(mongoRes))
+                        .catch((mongoResErr) => reject(mongoResErr));
                 }
             }
         } catch (e) {
-            reject('Field names must be an array.')
+            reject('Field names must be an array.');
         }
     });
 };
@@ -70,16 +59,22 @@ const getOneModel = (modelId) => {
     });
 };
 
-const editModel = () => {
+const editOneModel = (modelId) => {
     return new Promise((resolve, reject) => {
 
     });
 };
 
-const deleteModel = () => {
+const deleteOneModel = (modelId) => {
     return new Promise((resolve, reject) => {
-
+        ModelModel.deleteOne({_id: modelId}, (error, model) => {
+            if (error) {
+                return reject(error);
+            } else {
+                return resolve(model);
+            }
+        });
     });
 };
 
-module.exports = {createModel, getAllModels, getAllModelsFromBrand, getOneModel, editModel, deleteModel};
+module.exports = {createModel, getAllModels, getAllModelsFromBrand, getOneModel, editOneModel, deleteOneModel};

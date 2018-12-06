@@ -6,26 +6,15 @@ const createBrand = (body, user) => {
             const names = JSON.parse(body['names']);
 
             //TODO: Handle response with all created and all errors
-            let response = {created : [], error: []};
 
             for (const i in names) {
-                if (names.hasOwnProperty(i)) {
-                    const brandName = names[i];
+                if (names.hasOwnProperty(i) && names[i].trim() !== '') {
+                    body.name = names[i].trim();
+                    body.createdBy = user._id;
 
-                    BrandModel.findOne({name: brandName}, (error, brand) => {
-                        if (error) {
-                            return reject(error);
-                        } else if (brand) {
-                            return reject('Brand already exists.');
-                        } else {
-                            body.name = brandName;
-                            body.createdBy = user._id;
-
-                            BrandModel.create(body)
-                                .then((mongoRes) => resolve(mongoRes))
-                                .catch((mongoResErr) => reject(mongoResErr));
-                        }
-                    });
+                    BrandModel.create(body)
+                        .then((mongoRes) => resolve(mongoRes))
+                        .catch((mongoResErr) => reject(mongoResErr));
                 }
             }
         } catch (e) {
@@ -34,7 +23,6 @@ const createBrand = (body, user) => {
     });
 };
 
-//TODO: Replace `createdBy` by the name of Author + Id
 const getAllBrands = () => {
     return new Promise((resolve, reject) => {
         BrandModel.find({}, (error, brands) => {
@@ -47,7 +35,6 @@ const getAllBrands = () => {
     });
 };
 
-//TODO: Replace `createdBy` by the name of Author + Id
 const getOneBrand = (brandId) => {
     return new Promise((resolve, reject) => {
         BrandModel.findById(brandId, (error, brand) => {
@@ -60,16 +47,22 @@ const getOneBrand = (brandId) => {
     });
 };
 
-const editBrand = () => {
+const editOneBrand = () => {
     return new Promise((resolve, reject) => {
 
     });
 };
 
-const deleteBrand = () => {
+const deleteOneBrand = (brandId) => {
     return new Promise((resolve, reject) => {
-
+        BrandModel.deleteOne({_id: brandId}, (error, brand) => {
+            if (error) {
+                return reject(error);
+            } else {
+                return resolve(brand);
+            }
+        });
     });
 };
 
-module.exports = {createBrand, getAllBrands, getOneBrand, editBrand, deleteBrand};
+module.exports = {createBrand, getAllBrands, getOneBrand, editOneBrand, deleteOneBrand};

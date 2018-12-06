@@ -1,6 +1,6 @@
 const express = require('express');
 const brandRouter = express.Router();
-const {createBrand, getAllBrands, getOneBrand, editBrand, deleteBrand} = require('./brand.controller');
+const {createBrand, getAllBrands, getOneBrand, editOneBrand, deleteOneBrand} = require('./brand.controller');
 const {gotBody, checkFields} = require('../../services/request.service');
 const {sendBodyError, sendFieldsError, sendApiSuccess, sendApiError} = require('../../services/response.service');
 
@@ -35,6 +35,12 @@ class BrandRouterClass {
         brandRouter.get('/:id', this.passport.authenticate('jwt', {session: false}), (req, res) => {
             getOneBrand(req.params.id)
                 .then(apiRes => sendApiSuccess(res, apiRes, 'Brand ' + req.params.id))
+                .catch(apiResErr => sendApiError(res, null, apiResErr));
+        });
+
+        brandRouter.delete('/:id', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+            deleteOneBrand(req.params.id)
+                .then(apiRes => sendApiSuccess(res, apiRes, 'Brand ' + req.params.id + ' successfully deleted.'))
                 .catch(apiResErr => sendApiError(res, null, apiResErr));
         });
     }

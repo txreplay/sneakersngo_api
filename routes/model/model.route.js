@@ -1,6 +1,6 @@
 const express = require('express');
 const modelRouter = express.Router();
-const {createModel, getAllModels, getAllModelsFromBrand, getOneModel, editModel, deleteModel} = require('./model.controller');
+const {createModel, getAllModels, getAllModelsFromBrand, getOneModel, editOneModel, deleteOneModel} = require('./model.controller');
 const {gotBody, checkFields} = require('../../services/request.service');
 const {sendBodyError, sendFieldsError, sendApiSuccess, sendApiError} = require('../../services/response.service');
 
@@ -41,6 +41,12 @@ class ModelRouterClass {
         modelRouter.get('/:id', this.passport.authenticate('jwt', {session: false}), (req, res) => {
             getOneModel(req.params.id)
                 .then(apiRes => sendApiSuccess(res, apiRes, 'Model ' + req.params.id))
+                .catch(apiResErr => sendApiError(res, null, apiResErr));
+        });
+
+        modelRouter.delete('/:id', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+            deleteOneModel(req.params.id)
+                .then(apiRes => sendApiSuccess(res, apiRes, 'Model ' + req.params.id + ' successfully deleted.'))
                 .catch(apiResErr => sendApiError(res, null, apiResErr));
         });
     }
