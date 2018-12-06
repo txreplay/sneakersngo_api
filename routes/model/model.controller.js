@@ -1,31 +1,35 @@
 const ModelModel = require('../../models/model.model');
 
 const createModel = (body, user) => {
-    const names = JSON.parse(body.names);
-
     return new Promise((resolve, reject) => {
-        //TODO: Handle response with all created and all errors
-        let response = {created : [], error: []};
+        try {
+            const names = JSON.parse(body['names']);
 
-        for (const i in names) {
-            if (names.hasOwnProperty(i)) {
-                const modelName = names[i];
+            //TODO: Handle response with all created and all errors
+            let response = {created : [], error: []};
 
-                ModelModel.findOne({name: modelName}, (error, model) => {
-                    if (error) {
-                        return reject(error);
-                    } else if (model) {
-                        return reject('Model already exists.');
-                    } else {
-                        body.name = modelName;
-                        body.createdBy = user._id;
+            for (const i in names) {
+                if (names.hasOwnProperty(i)) {
+                    const modelName = names[i];
 
-                        ModelModel.create(body)
-                            .then((mongoRes) => resolve(mongoRes))
-                            .catch((mongoResErr) => reject(mongoResErr));
-                    }
-                });
+                    ModelModel.findOne({name: modelName}, (error, model) => {
+                        if (error) {
+                            return reject(error);
+                        } else if (model) {
+                            return reject('Model already exists.');
+                        } else {
+                            body.name = modelName;
+                            body.createdBy = user._id;
+
+                            ModelModel.create(body)
+                                .then((mongoRes) => resolve(mongoRes))
+                                .catch((mongoResErr) => reject(mongoResErr));
+                        }
+                    });
+                }
             }
+        } catch (e) {
+            reject('Field names must be an array.')
         }
     });
 };
