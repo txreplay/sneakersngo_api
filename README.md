@@ -27,16 +27,23 @@ JWT_SECRET = 'OIç8Y9Sds$ùD09èé.:ùpsofudDS'
 ### BRAND
 
 `POST /brand`
+
 `GET /brand`
+
 `GET /brand/:brandId`
+
 `DELETE /brand/:brandId`
 
 ### MODEL
 
 `POST /model`
+
 `GET /model`
+
 `GET /model/:modelId`
+
 `GET /model/brand/:brandId`
+
 `DELETE /model/:modelId`
 
 ### SNEAKERS
