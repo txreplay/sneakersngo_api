@@ -1,10 +1,9 @@
 # SNEAKERS AND GO
----
 
 ## Development server
 Run `npm run start` for a dev server. Navigate to `http://localhost:4200/`. It uses `nodemon` so the app will automatically reload if you change any of the source files.
 
-## .env
+## .ENV
 Be sure to fill the `.env` file.
 
 Example :
@@ -14,9 +13,9 @@ MONGODB_URI = 'mongodb://localhost:27017/sneakersngo'
 JWT_SECRET = 'OIç8Y9Sds$ùD09èé.:ùpsofudDS'
 ```
 
-## Routes
+## ROUTES
 
-### AUTH
+### Auth
 
 `POST /auth/register`
 
@@ -24,7 +23,7 @@ JWT_SECRET = 'OIç8Y9Sds$ùD09èé.:ùpsofudDS'
 
 `GET /auth/confirmation/:confirmationHash`
 
-### BRAND
+### Brand
 
 `POST /brand`
 
@@ -34,7 +33,7 @@ JWT_SECRET = 'OIç8Y9Sds$ùD09èé.:ùpsofudDS'
 
 `DELETE /brand/:brandId`
 
-### MODEL
+### Model
 
 `POST /model`
 
