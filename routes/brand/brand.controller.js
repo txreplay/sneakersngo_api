@@ -1,22 +1,25 @@
 const BrandModel = require('../../models/brand.model');
 
 const createBrand = (body, user) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             const names = JSON.parse(body['names']);
-
-            //TODO: Handle response with all created and all errors
+            let create_response = {created: [], error: []};
 
             for (const i in names) {
                 if (names.hasOwnProperty(i) && names[i].trim() !== '') {
                     body.name = names[i].trim();
                     body.createdBy = user._id;
 
-                    BrandModel.create(body)
-                        .then((mongoRes) => resolve(mongoRes))
-                        .catch((mongoResErr) => reject(mongoResErr));
+                    await (async function() {
+                        await BrandModel.create(body)
+                            .then((mongoRes) => create_response.created.push(mongoRes))
+                            .catch((mongoResErr) => create_response.error.push(mongoResErr));
+                    }());
                 }
             }
+
+            return resolve(create_response);
         } catch (e) {
             reject('Field names must be an array.');
         }
