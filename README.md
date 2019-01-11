@@ -46,3 +46,17 @@ JWT_SECRET = 'OIç8Y9Sds$ùD09èé.:ùpsofudDS'
 `DELETE /model/:modelId`
 
 ### SNEAKERS
+
+`POST /sneaker`
+
+`GET /sneaker`
+
+`GET /sneaker/:sneakerId`
+
+`GET /sneaker/model/:modelId`
+
+`DELETE /sneaker/:sneakerId`
+
+### USERS
+
+`PATCH /user`

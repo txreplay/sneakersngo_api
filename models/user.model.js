@@ -15,7 +15,17 @@ const userSchema = new mongoose.Schema({
     confirmed: Boolean,
     confirmationHash: String,
     confirmationDate: Date,
-    rights: Object
+    rights: Object,
+    phone: String,
+    address: {
+        line1: String,
+        line2: String,
+        zip: String,
+        city: String,
+        region: String,
+        country: String,
+        additionnalInfos: String
+    }
 }, {timestamps: true});
 
 userSchema.methods.generateJwt = function generateJwt() {
