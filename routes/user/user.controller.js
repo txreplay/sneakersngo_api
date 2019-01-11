@@ -10,4 +10,33 @@ const updateProfile = (body, user) => {
     });
 };
 
-module.exports = {updateProfile};
+const getAllUsers = () => {
+    return new Promise((resolve, reject) => {
+
+        UserModel.find({}, (error, users) => {
+            return (error) ? reject(error) : resolve(users);
+        });
+    });
+};
+
+const getOneUser = (userId) => {
+    return new Promise((resolve, reject) => {
+        UserModel.findById(userId, (error, users) => {
+            return (error) ? reject(error) : resolve(users);
+        });
+    });
+};
+
+const getUsersStats = () => {
+    return new Promise((resolve, reject) => {
+        console.log('aaa');
+        getAllUsers()
+            .then(users => {
+                console.log(users);
+            })
+            .catch((mongoResErr) => reject(mongoResErr));
+
+    });
+};
+
+module.exports = {updateProfile, getAllUsers, getOneUser, getUsersStats};
