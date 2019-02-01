@@ -25,7 +25,8 @@ const userSchema = new mongoose.Schema({
         region: String,
         country: String,
         additionnalInfos: String
-    }
+    },
+    wishlist: [mongoose.Schema.Types.ObjectId]
 }, {timestamps: true});
 
 userSchema.methods.generateJwt = function generateJwt() {

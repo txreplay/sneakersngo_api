@@ -11,6 +11,7 @@ const {SneakerRouterClass} = require('./sneaker/sneaker.route');
 const {UserRouterClass} = require('./user/user.route');
 const {RentRouterClass} = require('./rent/rent.route');
 const {StatsRouterClass} = require('./stats/stats.route');
+const {WishlistRouterClass} = require('./wishlist/wishlist.route');
 
 const mainRouter = Router();
 const apiRouter = Router();
@@ -22,6 +23,7 @@ const sneakerRouter = new SneakerRouterClass({passport});
 const userRouter = new UserRouterClass({passport});
 const rentRouter = new RentRouterClass({passport});
 const statsRouter = new StatsRouterClass({passport});
+const wishlistRouter = new WishlistRouterClass({passport});
 
 mainRouter.use('/', apiRouter);
 apiRouter.use('/auth', authRouter.init());
@@ -31,5 +33,6 @@ apiRouter.use('/sneaker', sneakerRouter.init());
 apiRouter.use('/user', userRouter.init());
 apiRouter.use('/rent', rentRouter.init());
 apiRouter.use('/stats', statsRouter.init());
+apiRouter.use('/wishlist', wishlistRouter.init());
 
 module.exports = { mainRouter };
