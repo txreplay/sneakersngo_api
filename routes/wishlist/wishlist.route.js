@@ -1,6 +1,6 @@
 const express = require('express');
 const wishlistRouter = express.Router();
-const {addToWishlist, deleteFromWishlist} = require('./wishlist.controller');
+const {addToWishlist, deleteFromWishlist, isInWishlist} = require('./wishlist.controller');
 const {gotBody, checkFields} = require('../../services/request.service');
 const {sendBodyError, sendFieldsError, sendApiSuccess, sendApiError} = require('../../services/response.service');
 
@@ -26,6 +26,11 @@ class WishlistRouterClass {
             }
         });
 
+        wishlistRouter.get('/:id', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+            isInWishlist(req.params.id, req.user)
+                .then(apiRes => sendApiSuccess(res, apiRes, 'Sneaker ' + req.params.id))
+                .catch(apiResErr => sendApiError(res, null, apiResErr));
+        });
 
         wishlistRouter.delete('/:id', this.passport.authenticate('jwt', {session: false}), (req, res) => {
             deleteFromWishlist(req.params.id, req.user)

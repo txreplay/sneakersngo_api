@@ -39,7 +39,7 @@ class SneakerRouterClass {
         });
 
         sneakerRouter.get('/:id', this.passport.authenticate('jwt', {session: false}), (req, res) => {
-            getOneSneaker(req.params.id)
+            getOneSneaker(req.params.id, req.user)
                 .then(apiRes => sendApiSuccess(res, apiRes, 'Sneaker ' + req.params.id))
                 .catch(apiResErr => sendApiError(res, null, apiResErr));
         });

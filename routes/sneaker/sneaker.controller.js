@@ -1,4 +1,6 @@
 const SneakerModel = require('../../models/sneaker.model');
+const {isInWishlist} = require('../wishlist/wishlist.controller');
+
 
 const createSneaker = (body, user) => {
     return new Promise(async (resolve, reject) => {
@@ -30,10 +32,21 @@ const getAllSneakersByModel = (modelId) => {
     });
 };
 
-const getOneSneaker = (sneakerId) => {
-    return new Promise((resolve, reject) => {
-        SneakerModel.findById(sneakerId, (error, sneaker) => {
-            return (error) ? reject(error) : resolve(sneaker);
+const getOneSneaker = (sneakerId, user) => {
+    return new Promise(async (resolve, reject) => {
+        SneakerModel.findById(sneakerId, async (error, sneaker) => {
+            let response = {};
+            response.sneaker = sneaker;
+
+            await (async function() {
+                await isInWishlist(sneakerId, user)
+                    .then(isIn => {
+                        response.favorite = isIn;
+                    })
+                    .catch(error => reject(error));
+            }());
+
+            return (error) ? reject(error) : resolve(response);
         });
     });
 };
