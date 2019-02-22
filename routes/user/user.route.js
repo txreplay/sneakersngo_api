@@ -1,6 +1,6 @@
 const express = require('express');
 const userRouter = express.Router();
-const {updateProfile, getAllUsers, getOneUser} = require('./user.controller');
+const {updateProfile, getAllUsers, getOneUser, getUserRents} = require('./user.controller');
 const {gotBody, checkFields} = require('../../services/request.service');
 const {sendBodyError, sendFieldsError, sendApiSuccess, sendApiError} = require('../../services/response.service');
 
@@ -35,6 +35,12 @@ class UserRouterClass {
         userRouter.get('/:id', this.passport.authenticate('jwt', {session: false}), (req, res) => {
             getOneUser(req.params.id)
                 .then(apiRes => sendApiSuccess(res, apiRes, 'User ' + req.params.id))
+                .catch(apiResErr => sendApiError(res, null, apiResErr));
+        });
+
+        userRouter.get('/:id/rents', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+            getUserRents(req.params.id)
+                .then(apiRes => sendApiSuccess(res, apiRes, 'Rents for user ' + req.params.id))
                 .catch(apiResErr => sendApiError(res, null, apiResErr));
         });
     }

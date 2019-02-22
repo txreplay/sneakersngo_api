@@ -1,4 +1,5 @@
 const UserModel = require('../../models/user.model');
+const RentModel = require('../../models/rent.model');
 
 const updateProfile = (body, user) => {
     return new Promise((resolve, reject) => {
@@ -39,4 +40,12 @@ const getUsersStats = () => {
     });
 };
 
-module.exports = {updateProfile, getAllUsers, getOneUser, getUsersStats};
+const getUserRents = (userId) => {
+    return new Promise((resolve, reject) => {
+        RentModel.find({user: userId}, (error, rents) => {
+            return (error) ? reject(error) : resolve(rents);
+        });
+    });
+};
+
+module.exports = {updateProfile, getAllUsers, getOneUser, getUsersStats, getUserRents};
