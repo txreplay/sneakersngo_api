@@ -15,7 +15,7 @@ class SneakerRouterClass {
                 sendBodyError(res);
             }
 
-            const {validity, extra, miss} = checkFields(['model', 'size', 'color', 'originalPrice', 'rentPrice'], req.body);
+            const {validity, extra, miss} = checkFields(['model', 'size', 'color', 'originalPrice', 'rentPrice', 'description', 'compositionExt', 'compositionOutSole'], req.body);
 
             if (!validity) {
                 sendFieldsError(res, extra, miss);

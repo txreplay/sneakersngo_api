@@ -7,6 +7,9 @@ const brandSchema = new mongoose.Schema({
     // availaibility: String,
     originalPrice: Number,
     rentPrice: Number,
+    description: String,
+    compositionExt: String,
+    compositionOutSole: String,
     nbRent: Number,
 
     createdBy: mongoose.Schema.Types.ObjectId
