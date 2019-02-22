@@ -17,46 +17,85 @@ JWT_SECRET = 'OIç8Y9Sds$ùD09èé.:ùpsofudDS'
 
 ### Auth
 
-`POST /auth/register`
+`POST /auth/register` (Anon)
 
-`POST /auth/login`
+`POST /auth/login` (Anon)
 
-`GET /auth/confirmation/:confirmationHash`
+`GET /auth/confirmation/:confirmationHash` (Anon)
 
 ### Brand
 
-`POST /brand`
+`POST /brand` (Admin)
 
-`GET /brand`
+`GET /brand` (Anon)
 
-`GET /brand/:brandId`
+`GET /brand/:brandId` (Anon)
 
-`DELETE /brand/:brandId`
+`DELETE /brand/:brandId` (Admin)
 
 ### Model
 
-`POST /model`
+`POST /model` (Admin)
 
-`GET /model`
+`GET /model` (Anon)
 
-`GET /model/:modelId`
+`GET /model/:modelId` (Anon)
 
-`GET /model/brand/:brandId`
+`GET /model/brand/:brandId` (Anon)
 
-`DELETE /model/:modelId`
+`DELETE /model/:modelId` (Admin)
 
 ### SNEAKERS
 
-`POST /sneaker`
+`POST /sneaker` (Admin)
 
-`GET /sneaker`
+`GET /sneaker` (Anon)
 
-`GET /sneaker/:sneakerId`
+`GET /sneaker/:sneakerId` (Anon)
 
-`GET /sneaker/model/:modelId`
+`GET /sneaker/model/:modelId` (Anon)
 
-`DELETE /sneaker/:sneakerId`
+`DELETE /sneaker/:sneakerId` (Admin)
 
 ### USERS
 
-`PATCH /user`
+`PATCH /user` (Logged)
+
+`GET /user/:id` (Same user)
+
+`GET /user/:id/rents` (Same user)
+
+`GET /user` (Admin)
+
+### RENTS
+
+`POST /rent` (Logged)
+
+`GET /rent/:id` (Same user)
+
+`GET /rent` (Admin)
+
+`PATCH /rent/status/:status` (Admin)
+
+### STATS
+
+`POST /stats/user` (Admin)
+
+`GET /rent/:id` (Same user)
+
+
+### REQUEST
+
+`POST /request` (Logged)
+
+`GET /request/:id` (Admin)
+
+`GET /request` (Admin)
+
+### WISHLIST
+
+`POST /wishlist` (Logged)
+
+`GET /wishlist/:id` (Same user)
+
+`DELETE /wishlist/:id` (Same user)

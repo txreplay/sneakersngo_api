@@ -1,7 +1,6 @@
 const SneakerModel = require('../../models/sneaker.model');
 const {isInWishlist} = require('../wishlist/wishlist.controller');
 
-
 const createSneaker = (body, user) => {
     return new Promise(async (resolve, reject) => {
         try {
