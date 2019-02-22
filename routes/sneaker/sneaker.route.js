@@ -26,19 +26,19 @@ class SneakerRouterClass {
             }
         });
 
-        sneakerRouter.get('/', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+        sneakerRouter.get('/', (req, res) => {
             getAllSneakers()
                 .then(apiRes => sendApiSuccess(res, apiRes, 'List of sneakers.'))
                 .catch(apiResErr => sendApiError(res, null, apiResErr));
         });
 
-        sneakerRouter.get('/model/:id', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+        sneakerRouter.get('/model/:id', (req, res) => {
             getAllSneakersByModel(req.params.id)
                 .then(apiRes => sendApiSuccess(res, apiRes, 'List of sneakers by model ' + req.params.id))
                 .catch(apiResErr => sendApiError(res, null, apiResErr));
         });
 
-        sneakerRouter.get('/:id', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+        sneakerRouter.get('/:id', (req, res) => {
             getOneSneaker(req.params.id, req.user)
                 .then(apiRes => sendApiSuccess(res, apiRes, 'Sneaker ' + req.params.id))
                 .catch(apiResErr => sendApiError(res, null, apiResErr));

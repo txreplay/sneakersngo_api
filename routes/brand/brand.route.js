@@ -26,13 +26,13 @@ class BrandRouterClass {
             }
         });
 
-        brandRouter.get('/', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+        brandRouter.get('/', (req, res) => {
             getAllBrands()
                 .then(apiRes => sendApiSuccess(res, apiRes, 'List of brands.'))
                 .catch(apiResErr => sendApiError(res, null, apiResErr));
         });
 
-        brandRouter.get('/:id', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+        brandRouter.get('/:id', (req, res) => {
             getOneBrand(req.params.id)
                 .then(apiRes => sendApiSuccess(res, apiRes, 'Brand ' + req.params.id))
                 .catch(apiResErr => sendApiError(res, null, apiResErr));

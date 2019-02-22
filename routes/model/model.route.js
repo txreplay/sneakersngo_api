@@ -26,19 +26,19 @@ class ModelRouterClass {
             }
         });
 
-        modelRouter.get('/', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+        modelRouter.get('/', (req, res) => {
             getAllModels()
                 .then(apiRes => sendApiSuccess(res, apiRes, 'List of models.'))
                 .catch(apiResErr => sendApiError(res, null, apiResErr));
         });
 
-        modelRouter.get('/brand/:id', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+        modelRouter.get('/brand/:id', (req, res) => {
             getAllModelsFromBrand(req.params.id)
                 .then(apiRes => sendApiSuccess(res, apiRes, 'List of models by brand ' + req.params.id))
                 .catch(apiResErr => sendApiError(res, null, apiResErr));
         });
 
-        modelRouter.get('/:id', this.passport.authenticate('jwt', {session: false}), (req, res) => {
+        modelRouter.get('/:id', (req, res) => {
             getOneModel(req.params.id)
                 .then(apiRes => sendApiSuccess(res, apiRes, 'Model ' + req.params.id))
                 .catch(apiResErr => sendApiError(res, null, apiResErr));
