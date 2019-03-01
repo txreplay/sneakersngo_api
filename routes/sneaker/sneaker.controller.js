@@ -39,10 +39,8 @@ const getOneSneaker = (sneakerId, user) => {
 
             await (async function() {
                 await isInWishlist(sneakerId, user)
-                    .then(isIn => {
-                        response.favorite = isIn;
-                    })
-                    .catch(error => reject(error));
+                    .then(isIn => response.favorite = isIn)
+                    .catch(error => response.favorite = false);
             }());
 
             return (error) ? reject(error) : resolve(response);
