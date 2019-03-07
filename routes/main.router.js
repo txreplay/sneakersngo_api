@@ -26,6 +26,7 @@ const rentRouter = new RentRouterClass({passport});
 const statsRouter = new StatsRouterClass({passport});
 const wishlistRouter = new WishlistRouterClass({passport});
 const requestRouter = new RequestRouterClass({passport});
+const cartRouter = new RequestRouterClass({passport});
 
 mainRouter.use('/', apiRouter);
 apiRouter.use('/auth', authRouter.init());
@@ -37,5 +38,6 @@ apiRouter.use('/rent', rentRouter.init());
 apiRouter.use('/stats', statsRouter.init());
 apiRouter.use('/wishlist', wishlistRouter.init());
 apiRouter.use('/request', requestRouter.init());
+apiRouter.use('/cart', cartRouter.init());
 
 module.exports = { mainRouter };
